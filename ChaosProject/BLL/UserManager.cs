@@ -49,16 +49,16 @@ namespace BLL
 
         }
 
-        public int checkUser(String username, String userPW)
+        public bool checkUser(String username, String userPW)
         {
             foreach (User u in context.Users)
             {
                 if (u.Login.Equals(username) && u.Password.Equals(userPW))
                 {
-                    return u.Id;
+                    return true;
                 }
             }
-            return -1;
+            return false;
         }
     }
 }

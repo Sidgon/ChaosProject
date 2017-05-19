@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using DAL;
 using BLL;
+using ChaosWeb.Models;
 
 namespace ChaosWeb.Controllers
 {
@@ -19,6 +20,52 @@ namespace ChaosWeb.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public ActionResult Login(LoginView loginVM)
+        {
+            if (ModelState.IsValid)
+            {
+                //BLL
+                UserManager usermanager = new UserManager();
+                bool isCorrect = usermanager.checkUser(loginVM.Login, loginVM.Password);
+
+                if (!isCorrect)
+                {
+                    ModelState.AddModelError(string.Empty, "Username or password are incorrect");
+
+                    return View(loginVM);
+                }
+                User userlogin = new User();
+                List<User> users = usermanager.GetUsers();
+                foreach (User u in users)
+                {
+                    if (u.Login.Equals(loginVM.Login))
+                    {
+                        userlogin = u;
+                    }
+                }
+
+                return RedirectToAction("UserDetails", new { id = userlogin.Id });
+
+            }
+            return View(loginVM);
+        }
+
+        public ActionResult UserDetails(int id)
+        {
+            UserManager usermanager = new UserManager();
+            List<User> user = usermanager.GetUsers();
+            for (int i = 0; i < user.Count; i++)
+                if (user[i].Id == id)
+                {
+                    User m = new User();
+                    m = user[i];
+                    return View(m);
+                }
+            return View();
+        }
+
+
 
         public ActionResult RegisterView()
         {
@@ -51,14 +98,6 @@ namespace ChaosWeb.Controllers
         }
 
 
-
-        public ActionResult Map()
-        {
-            LocationManager sm = new LocationManager();
-            List <Location> list= sm.getLocation();
-            return View(list);
-        }
-
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -72,5 +111,39 @@ namespace ChaosWeb.Controllers
 
             return View();
         }
+
+        public ActionResult ListUser(string firstname, string lastname)
+        {
+
+            UserManager usermanager = new UserManager();
+            List<User> listUsers = usermanager.GetUsers();
+            if (firstname == null && lastname == null)
+            {
+                return View(listUsers);
+            }
+            List<User> foundUsers = new List<User>();
+
+            foreach (User u in listUsers)
+            {
+                if (u.Firstname.ToLower().Equals(firstname.ToLower()) && u.Lastname.ToLower().Equals(lastname.ToLower()))
+                {
+                    foundUsers.Add(u);
+                }
+            }
+            return View(foundUsers);
+        }
+
+
+
+
+
+        public ActionResult Map()
+        {
+            LocationManager sm = new LocationManager();
+            List <Location> list= sm.getLocation();
+            return View(list);
+        }
+
+       
     }
 }
