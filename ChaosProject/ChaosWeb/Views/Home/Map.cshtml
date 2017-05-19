@@ -1,0 +1,72 @@
+﻿@model IEnumerable<DAL.Location>
+
+@{
+    ViewBag.Title = "Map";
+}
+
+<h2>Map</h2>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<script>
+    var geocoder;
+    var map;
+    function initialize() {
+        geocoder = new google.maps.Geocoder();
+        var latlng = new google.maps.LatLng(46.279805, 7.539386);
+        var mapOptions = {
+            zoom: 8,
+            center: latlng
+        }
+        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        codeAddress();
+    }
+
+    function codeAddress() {
+        var counter = 0;
+        var locations = [];
+        var marker = new Array();
+        @foreach (var item in Model)
+        {
+            String test = Html.DisplayFor(modelItem => item.Street) + ", " + Html.DisplayFor(modelItem => item.PLZ) + ' '+Html.DisplayFor(modelItem => item.City);
+        <text>
+
+        geocoder.geocode({ 'address': '@Html.DisplayFor(modelItem => test)' }, function (results, status) {
+            if (status == 'OK') {
+                map.setCenter(results[0].geometry.location);
+                marker[counter] = new google.maps.Marker({
+                    map: map,
+                    position: results[0].geometry.location
+                });
+                counter++;
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+        });
+        </text>
+        }
+    }
+</script>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC0pUBDD2-5CTgLxGUSKB42TuHKyw-sxpA&callback=initMap">
+
+</script>
+
+<body onload="initialize()">
+    <div id="map" style="width: 320px; height: 480px;"></div>
+    <div>
+        <input id="address" type="textbox" value="Sydney, NSW">
+        <input type="button" value="Encode" id="buttonTest" onclick="codeAddress()">
+    </div>
+    <script></script>
+</body>
+

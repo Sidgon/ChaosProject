@@ -51,6 +51,14 @@ namespace ChaosWeb.Controllers
         }
 
 
+
+        public ActionResult Map()
+        {
+            LocationManager sm = new LocationManager();
+            List <Location> list= sm.getLocation();
+            return View(list);
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
