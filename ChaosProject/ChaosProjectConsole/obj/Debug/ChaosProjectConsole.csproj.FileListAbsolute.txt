@@ -3,5 +3,6 @@ C:\Users\david\Documents\Visual Studio 2015\RepoGit\ChaosProject\ChaosProjectCon
 C:\Users\Joey\Documents\ChaosProject\ChaosProject\ChaosProjectConsole\bin\Debug\ChaosProjectConsole.exe.config
 C:\Users\Joey\Documents\ChaosProject\ChaosProject\ChaosProjectConsole\bin\Debug\ChaosProjectConsole.exe
 C:\Users\Joey\Documents\ChaosProject\ChaosProject\ChaosProjectConsole\bin\Debug\ChaosProjectConsole.pdb
+C:\Users\Joey\Documents\ChaosProject\ChaosProject\ChaosProjectConsole\obj\Debug\ChaosProjectConsole.csprojResolveAssemblyReference.cache
 C:\Users\Joey\Documents\ChaosProject\ChaosProject\ChaosProjectConsole\obj\Debug\ChaosProjectConsole.exe
 C:\Users\Joey\Documents\ChaosProject\ChaosProject\ChaosProjectConsole\obj\Debug\ChaosProjectConsole.pdb
