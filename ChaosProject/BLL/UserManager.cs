@@ -18,7 +18,9 @@ namespace BLL
         
         public List<User> GetUsers()
         {
-            return context.Users.ToList();
+            List<User> test = context.Users.ToList();
+
+            return test;
         }
 
         public User GetSingleUser(int id)
@@ -26,10 +28,25 @@ namespace BLL
             return context.Users.Find(id);
         }
 
-        public void insertUser(User u)
+        public int insertUser(User user)
         {
-            context.Users.Add(u);
+            List<User> users = new List<User>();
+            users = GetUsers();
+            if (users != null)
+            {
+                foreach (User u in users)
+                {
+                    if (user.Login.Equals(u.Login))
+                    {
+                        return -1;
+                    }
+                }
+            }
+
+            context.Users.Add(user);
             context.SaveChanges();
+            return user.Id;
+
         }
 
         public int checkUser(String username, String userPW)
