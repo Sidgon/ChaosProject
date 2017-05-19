@@ -14,6 +14,18 @@ namespace DAL
     
     public partial class Subcategory
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Subcategory()
+        {
+            this.File = new HashSet<File>();
+        }
+    
         public int Id { get; set; }
+        public int CategoryId { get; set; }
+        public string SubcategoryName { get; set; }
+    
+        public virtual Category Category { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<File> File { get; set; }
     }
 }

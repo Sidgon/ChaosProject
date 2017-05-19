@@ -28,5 +28,10 @@ namespace DAL
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Category> Categories { get; set; }
         public virtual DbSet<Subcategory> Subcategories { get; set; }
+        public virtual DbSet<School> Schools { get; set; }
+        public virtual DbSet<File> Files { get; set; }
+        public virtual DbSet<Keyword> Keywords { get; set; }
+        public virtual DbSet<Format> Formats { get; set; }
+        public virtual DbSet<Location> Locations { get; set; }
     }
 }

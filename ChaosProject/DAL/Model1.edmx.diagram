@@ -5,9 +5,23 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="48990469b0f140a3b3a8180fa86570ca" Name="Diagram1" >
-        <EntityTypeShape EntityType="Model1.User" Width="1.5" PointX="6.375" PointY="0.5" />
-        <EntityTypeShape EntityType="Model1.Category" Width="1.5" PointX="6.375" PointY="3.5" />
-        <EntityTypeShape EntityType="Model1.Subcategory" Width="1.5" PointX="6.375" PointY="5.125" />
+        <EntityTypeShape EntityType="Model1.User" Width="1.5" PointX="6.375" PointY="2.875" />
+        <EntityTypeShape EntityType="Model1.Category" Width="1.5" PointX="6.375" PointY="6.5" />
+        <EntityTypeShape EntityType="Model1.Subcategory" Width="1.5" PointX="3.5" PointY="6.375" />
+        <EntityTypeShape EntityType="Model1.School" Width="1.5" PointX="6.25" PointY="0.5" />
+        <EntityTypeShape EntityType="Model1.File" Width="1.5" PointX="3.625" PointY="3" />
+        <EntityTypeShape EntityType="Model1.Keyword" Width="1.5" PointX="3.625" PointY="0.75" />
+        <EntityTypeShape EntityType="Model1.Format" Width="1.5" PointX="0.875" PointY="3.25" />
+        <EntityTypeShape EntityType="Model1.Location" Width="1.5" PointX="8.75" PointY="0.5" />
+        <AssociationConnector Association="Model1.LocationSchool" />
+        <AssociationConnector Association="Model1.UserSchool" />
+        <AssociationConnector Association="Model1.CategorySubcategory" />
+        <AssociationConnector Association="Model1.FileKeyword" />
+        <AssociationConnector Association="Model1.FileSubcategory" />
+        <AssociationConnector Association="Model1.FormatFile" />
+        <AssociationConnector Association="Model1.FileUser" />
+        <AssociationConnector Association="Model1.FileSchool" />
+        <AssociationConnector Association="Model1.UserCategory" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -9,17 +9,73 @@
     <EntitySet Name="Users" EntityType="Model1.Store.Users" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Categories" EntityType="Model1.Store.Categories" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Subcategories" EntityType="Model1.Store.Subcategories" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Schools" EntityType="Model1.Store.Schools" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Files" EntityType="Model1.Store.Files" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Keywords" EntityType="Model1.Store.Keywords" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Formats" EntityType="Model1.Store.Formats" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Locations" EntityType="Model1.Store.Locations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserSchool" EntityType="Model1.Store.UserSchool" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FileKeyword" EntityType="Model1.Store.FileKeyword" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="UserCategory" EntityType="Model1.Store.UserCategory" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="LocationSchool" Association="Model1.Store.LocationSchool">
+      <End Role="Location" EntitySet="Locations" />
+      <End Role="School" EntitySet="Schools" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSchool_User" Association="Model1.Store.FK_UserSchool_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserSchool" EntitySet="UserSchool" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserSchool_School" Association="Model1.Store.FK_UserSchool_School">
+      <End Role="School" EntitySet="Schools" />
+      <End Role="UserSchool" EntitySet="UserSchool" />
+    </AssociationSet>
+    <AssociationSet Name="CategorySubcategory" Association="Model1.Store.CategorySubcategory">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Subcategory" EntitySet="Subcategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FileKeyword_File" Association="Model1.Store.FK_FileKeyword_File">
+      <End Role="File" EntitySet="Files" />
+      <End Role="FileKeyword" EntitySet="FileKeyword" />
+    </AssociationSet>
+    <AssociationSet Name="FK_FileKeyword_Keyword" Association="Model1.Store.FK_FileKeyword_Keyword">
+      <End Role="Keyword" EntitySet="Keywords" />
+      <End Role="FileKeyword" EntitySet="FileKeyword" />
+    </AssociationSet>
+    <AssociationSet Name="FileSubcategory" Association="Model1.Store.FileSubcategory">
+      <End Role="File" EntitySet="Files" />
+      <End Role="Subcategory" EntitySet="Subcategories" />
+    </AssociationSet>
+    <AssociationSet Name="FormatFile" Association="Model1.Store.FormatFile">
+      <End Role="Format" EntitySet="Formats" />
+      <End Role="File" EntitySet="Files" />
+    </AssociationSet>
+    <AssociationSet Name="FileUser" Association="Model1.Store.FileUser">
+      <End Role="File" EntitySet="Files" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FileSchool" Association="Model1.Store.FileSchool">
+      <End Role="File" EntitySet="Files" />
+      <End Role="School" EntitySet="Schools" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserCategory_User" Association="Model1.Store.FK_UserCategory_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="UserCategory" EntitySet="UserCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserCategory_Category" Association="Model1.Store.FK_UserCategory_Category">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="UserCategory" EntitySet="UserCategory" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="Users">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Firstname" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Lastname" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Login" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
     <Property Name="AcademicTitle" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Firstname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Lastname" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Tel" Type="nvarchar(max)" Nullable="false" />
     <Property Name="Mail" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
@@ -28,13 +84,227 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
   <EntityType Name="Subcategories">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CategoryId" Type="int" Nullable="false" />
+    <Property Name="SubcategoryName" Type="nvarchar(max)" Nullable="false" />
   </EntityType>
+  <EntityType Name="Schools">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Location_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Files">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Filename" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FormatId" Type="int" Nullable="false" />
+    <Property Name="Subcategory_Id" Type="int" Nullable="false" />
+    <Property Name="User_Id" Type="int" Nullable="false" />
+    <Property Name="School_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Keywords">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Tag" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Formats">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Locations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Street" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="StreetNumber" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="PLZ" Type="int" Nullable="false" />
+    <Property Name="City" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserSchool">
+    <Key>
+      <PropertyRef Name="User_Id" />
+      <PropertyRef Name="School_Id" />
+    </Key>
+    <Property Name="User_Id" Type="int" Nullable="false" />
+    <Property Name="School_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="FileKeyword">
+    <Key>
+      <PropertyRef Name="File_Id" />
+      <PropertyRef Name="Keyword_Id" />
+    </Key>
+    <Property Name="File_Id" Type="int" Nullable="false" />
+    <Property Name="Keyword_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UserCategory">
+    <Key>
+      <PropertyRef Name="User_Id" />
+      <PropertyRef Name="Category_Id" />
+    </Key>
+    <Property Name="User_Id" Type="int" Nullable="false" />
+    <Property Name="Category_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="LocationSchool">
+    <End Role="Location" Type="Model1.Store.Locations" Multiplicity="1" />
+    <End Role="School" Type="Model1.Store.Schools" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Location">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="School">
+        <PropertyRef Name="Location_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CategorySubcategory">
+    <End Role="Category" Type="Model1.Store.Categories" Multiplicity="1" />
+    <End Role="Subcategory" Type="Model1.Store.Subcategories" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Subcategory">
+        <PropertyRef Name="CategoryId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FileSubcategory">
+    <End Role="File" Type="Model1.Store.Files" Multiplicity="*" />
+    <End Role="Subcategory" Type="Model1.Store.Subcategories" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Subcategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="File">
+        <PropertyRef Name="Subcategory_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FormatFile">
+    <End Role="Format" Type="Model1.Store.Formats" Multiplicity="1" />
+    <End Role="File" Type="Model1.Store.Files" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Format">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="File">
+        <PropertyRef Name="FormatId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FileUser">
+    <End Role="File" Type="Model1.Store.Files" Multiplicity="*" />
+    <End Role="User" Type="Model1.Store.Users" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="File">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FileSchool">
+    <End Role="File" Type="Model1.Store.Files" Multiplicity="*" />
+    <End Role="School" Type="Model1.Store.Schools" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="File">
+        <PropertyRef Name="School_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSchool_User">
+    <End Role="User" Type="Model1.Store.Users" Multiplicity="1" />
+    <End Role="UserSchool" Type="Model1.Store.UserSchool" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserSchool">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserSchool_School">
+    <End Role="UserSchool" Type="Model1.Store.UserSchool" Multiplicity="*" />
+    <End Role="School" Type="Model1.Store.Schools" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="School">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserSchool">
+        <PropertyRef Name="School_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FileKeyword_File">
+    <End Role="File" Type="Model1.Store.Files" Multiplicity="1" />
+    <End Role="FileKeyword" Type="Model1.Store.FileKeyword" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="File">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FileKeyword">
+        <PropertyRef Name="File_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_FileKeyword_Keyword">
+    <End Role="FileKeyword" Type="Model1.Store.FileKeyword" Multiplicity="*" />
+    <End Role="Keyword" Type="Model1.Store.Keywords" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Keyword">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="FileKeyword">
+        <PropertyRef Name="Keyword_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserCategory_User">
+    <End Role="User" Type="Model1.Store.Users" Multiplicity="1" />
+    <End Role="UserCategory" Type="Model1.Store.UserCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserCategory">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserCategory_Category">
+    <End Role="UserCategory" Type="Model1.Store.UserCategory" Multiplicity="*" />
+    <End Role="Category" Type="Model1.Store.Categories" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="UserCategory">
+        <PropertyRef Name="Category_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -43,32 +313,185 @@
           <EntitySet Name="Users" EntityType="Model1.User" />
           <EntitySet Name="Categories" EntityType="Model1.Category" />
           <EntitySet Name="Subcategories" EntityType="Model1.Subcategory" />
+          <EntitySet Name="Schools" EntityType="Model1.School" />
+          <EntitySet Name="Files" EntityType="Model1.File" />
+          <EntitySet Name="Keywords" EntityType="Model1.Keyword" />
+          <EntitySet Name="Formats" EntityType="Model1.Format" />
+          <EntitySet Name="Locations" EntityType="Model1.Location" />
+          <AssociationSet Name="LocationSchool" Association="Model1.LocationSchool">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="School" EntitySet="Schools" />
+          </AssociationSet>
+          <AssociationSet Name="UserSchool" Association="Model1.UserSchool">
+            <End Role="User" EntitySet="Users" />
+            <End Role="School" EntitySet="Schools" />
+          </AssociationSet>
+          <AssociationSet Name="CategorySubcategory" Association="Model1.CategorySubcategory">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Subcategory" EntitySet="Subcategories" />
+          </AssociationSet>
+          <AssociationSet Name="FileKeyword" Association="Model1.FileKeyword">
+            <End Role="File" EntitySet="Files" />
+            <End Role="Keyword" EntitySet="Keywords" />
+          </AssociationSet>
+          <AssociationSet Name="FileSubcategory" Association="Model1.FileSubcategory">
+            <End Role="File" EntitySet="Files" />
+            <End Role="Subcategory" EntitySet="Subcategories" />
+          </AssociationSet>
+          <AssociationSet Name="FormatFile" Association="Model1.FormatFile">
+            <End Role="Format" EntitySet="Formats" />
+            <End Role="File" EntitySet="Files" />
+          </AssociationSet>
+          <AssociationSet Name="FileUser" Association="Model1.FileUser">
+            <End Role="File" EntitySet="Files" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FileSchool" Association="Model1.FileSchool">
+            <End Role="File" EntitySet="Files" />
+            <End Role="School" EntitySet="Schools" />
+          </AssociationSet>
+          <AssociationSet Name="UserCategory" Association="Model1.UserCategory">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Category" EntitySet="Categories" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Firstname" Type="String" Nullable="false" />
-          <Property Name="Lastname" Type="String" Nullable="false" />
           <Property Name="Login" Type="String" Nullable="false" />
           <Property Name="Password" Type="String" Nullable="false" />
           <Property Name="AcademicTitle" Type="String" Nullable="false" />
+          <Property Name="Firstname" Type="String" Nullable="false" />
+          <Property Name="Lastname" Type="String" Nullable="false" />
           <Property Name="Tel" Type="String" Nullable="false" />
           <Property Name="Mail" Type="String" Nullable="false" />
+          <NavigationProperty Name="School" Relationship="Model1.UserSchool" FromRole="User" ToRole="School" />
+          <NavigationProperty Name="File" Relationship="Model1.FileUser" FromRole="User" ToRole="File" />
+          <NavigationProperty Name="Category" Relationship="Model1.UserCategory" FromRole="User" ToRole="Category" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Subcategory" Relationship="Model1.CategorySubcategory" FromRole="Category" ToRole="Subcategory" />
+          <Property Name="CategoryName" Type="String" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Model1.UserCategory" FromRole="Category" ToRole="User" />
         </EntityType>
         <EntityType Name="Subcategory">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Category" Relationship="Model1.CategorySubcategory" FromRole="Subcategory" ToRole="Category" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="SubcategoryName" Type="String" Nullable="false" />
+          <NavigationProperty Name="File" Relationship="Model1.FileSubcategory" FromRole="Subcategory" ToRole="File" />
         </EntityType>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Location" Relationship="Model1.LocationSchool" FromRole="School" ToRole="Location" />
+          <NavigationProperty Name="User" Relationship="Model1.UserSchool" FromRole="School" ToRole="User" />
+          <Property Name="Name" Type="String" Nullable="false" />
+          <NavigationProperty Name="File" Relationship="Model1.FileSchool" FromRole="School" ToRole="File" />
+        </EntityType>
+        <EntityType Name="File">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Keyword" Relationship="Model1.FileKeyword" FromRole="File" ToRole="Keyword" />
+          <NavigationProperty Name="Subcategory" Relationship="Model1.FileSubcategory" FromRole="File" ToRole="Subcategory" />
+          <NavigationProperty Name="Format" Relationship="Model1.FormatFile" FromRole="File" ToRole="Format" />
+          <Property Name="Filename" Type="String" Nullable="false" />
+          <Property Name="FormatId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Model1.FileUser" FromRole="File" ToRole="User" />
+          <NavigationProperty Name="School" Relationship="Model1.FileSchool" FromRole="File" ToRole="School" />
+        </EntityType>
+        <EntityType Name="Keyword">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="File" Relationship="Model1.FileKeyword" FromRole="Keyword" ToRole="File" />
+          <Property Name="Tag" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Format">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="File" Relationship="Model1.FormatFile" FromRole="Format" ToRole="File" />
+          <Property Name="Type" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" xmlns="http://schemas.microsoft.com/ado/2009/11/edm" />
+          <NavigationProperty Name="School" Relationship="Model1.LocationSchool" FromRole="Location" ToRole="School" />
+          <Property Name="Street" Type="String" Nullable="false" />
+          <Property Name="StreetNumber" Type="String" Nullable="false" />
+          <Property Name="PLZ" Type="Int32" Nullable="false" />
+          <Property Name="City" Type="String" Nullable="false" />
+        </EntityType>
+        <Association Name="LocationSchool">
+          <End Type="Model1.Location" Role="Location" Multiplicity="1" />
+          <End Type="Model1.School" Role="School" Multiplicity="*" />
+        </Association>
+        <Association Name="UserSchool">
+          <End Type="Model1.User" Role="User" Multiplicity="*" />
+          <End Type="Model1.School" Role="School" Multiplicity="*" />
+        </Association>
+        <Association Name="CategorySubcategory">
+          <End Type="Model1.Category" Role="Category" Multiplicity="1" />
+          <End Type="Model1.Subcategory" Role="Subcategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Subcategory">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FileKeyword">
+          <End Type="Model1.File" Role="File" Multiplicity="*" />
+          <End Type="Model1.Keyword" Role="Keyword" Multiplicity="*" />
+        </Association>
+        <Association Name="FileSubcategory">
+          <End Type="Model1.File" Role="File" Multiplicity="*" />
+          <End Type="Model1.Subcategory" Role="Subcategory" Multiplicity="1" />
+        </Association>
+        <Association Name="FormatFile">
+          <End Type="Model1.Format" Role="Format" Multiplicity="1" />
+          <End Type="Model1.File" Role="File" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Format">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="File">
+              <PropertyRef Name="FormatId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FileUser">
+          <End Type="Model1.File" Role="File" Multiplicity="*" />
+          <End Type="Model1.User" Role="User" Multiplicity="1" />
+        </Association>
+        <Association Name="FileSchool">
+          <End Type="Model1.File" Role="File" Multiplicity="*" />
+          <End Type="Model1.School" Role="School" Multiplicity="1" />
+        </Association>
+        <Association Name="UserCategory">
+          <End Type="Model1.User" Role="User" Multiplicity="*" />
+          <End Type="Model1.Category" Role="Category" Multiplicity="*" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -79,11 +502,11 @@
       <EntityTypeMapping TypeName="IsTypeOf(Model1.User)">
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
-          <ScalarProperty Name="Lastname" ColumnName="Lastname" />
           <ScalarProperty Name="Login" ColumnName="Login" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="AcademicTitle" ColumnName="AcademicTitle" />
+          <ScalarProperty Name="Firstname" ColumnName="Firstname" />
+          <ScalarProperty Name="Lastname" ColumnName="Lastname" />
           <ScalarProperty Name="Tel" ColumnName="Tel" />
           <ScalarProperty Name="Mail" ColumnName="Mail" />
         </MappingFragment>
@@ -93,6 +516,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(Model1.Category)">
         <MappingFragment StoreEntitySet="Categories">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -100,9 +524,111 @@
       <EntityTypeMapping TypeName="IsTypeOf(Model1.Subcategory)">
         <MappingFragment StoreEntitySet="Subcategories">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+          <ScalarProperty Name="SubcategoryName" ColumnName="SubcategoryName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Schools">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.School)">
+        <MappingFragment StoreEntitySet="Schools">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Files">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.File)">
+        <MappingFragment StoreEntitySet="Files">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Filename" ColumnName="Filename" />
+          <ScalarProperty Name="FormatId" ColumnName="FormatId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Keywords">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Keyword)">
+        <MappingFragment StoreEntitySet="Keywords">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Tag" ColumnName="Tag" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Formats">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Format)">
+        <MappingFragment StoreEntitySet="Formats">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="IsTypeOf(Model1.Location)">
+        <MappingFragment StoreEntitySet="Locations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Street" ColumnName="Street" />
+          <ScalarProperty Name="StreetNumber" ColumnName="StreetNumber" />
+          <ScalarProperty Name="PLZ" ColumnName="PLZ" />
+          <ScalarProperty Name="City" ColumnName="City" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="LocationSchool" TypeName="Model1.LocationSchool" StoreEntitySet="Schools">
+      <EndProperty Name="Location">
+        <ScalarProperty Name="Id" ColumnName="Location_Id" />
+      </EndProperty>
+      <EndProperty Name="School">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserSchool" TypeName="Model1.UserSchool" StoreEntitySet="UserSchool">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="School">
+        <ScalarProperty Name="Id" ColumnName="School_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FileKeyword" TypeName="Model1.FileKeyword" StoreEntitySet="FileKeyword">
+      <EndProperty Name="File">
+        <ScalarProperty Name="Id" ColumnName="File_Id" />
+      </EndProperty>
+      <EndProperty Name="Keyword">
+        <ScalarProperty Name="Id" ColumnName="Keyword_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FileSubcategory" TypeName="Model1.FileSubcategory" StoreEntitySet="Files">
+      <EndProperty Name="Subcategory">
+        <ScalarProperty Name="Id" ColumnName="Subcategory_Id" />
+      </EndProperty>
+      <EndProperty Name="File">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FileUser" TypeName="Model1.FileUser" StoreEntitySet="Files">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="File">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FileSchool" TypeName="Model1.FileSchool" StoreEntitySet="Files">
+      <EndProperty Name="School">
+        <ScalarProperty Name="Id" ColumnName="School_Id" />
+      </EndProperty>
+      <EndProperty Name="File">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="UserCategory" TypeName="Model1.UserCategory" StoreEntitySet="UserCategory">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="Category">
+        <ScalarProperty Name="Id" ColumnName="Category_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
